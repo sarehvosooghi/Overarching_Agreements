@@ -5,13 +5,14 @@ Beta_P = 0.99   # β^P (politicians)
 Beta_E = 0.99   # β^E (experts)
 
 # Horizons
-TP = 60  # optional finite horizon for evaluation (e.g. 30, 100)
-TimeRange = 60 # fallback "infinite" horizon
+TP = 60          # finite horizon for evaluation (T=60, short/myopic column)
+TimeRange = 150  # long horizon approximating infinity (T=150 column)
+                 # FIX: was 60, must be 150 to reproduce Table B.1 correctly
 
 # Environment
 eta = 0.3      # η in π_i,t = 0.5*q_i,t^2 + η·Z_t
 phi = 0.99    # ϕ in Z_{t+1} = ϕ·Z_t + Ψ − (q_t·members)
-Psi = 10000       # Ψ exogenous inflow 
+Psi = 10000       # Ψ exogenous inflow
 
 # Beliefs
 phi_expert = 0.99
