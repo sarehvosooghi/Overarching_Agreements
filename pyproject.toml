@@ -1,3 +1,0 @@
-[tool.pytask.ini_options]
-paths = ["src/sareh_project/tasks"]
-task_files = ["Task_*.py"]
