@@ -1,0 +1,21 @@
+[workspace]
+channels = ["conda-forge"]
+name = "Transfer to python"
+platforms = ["win-64", "osx-arm64"]
+version = "0.1.0"
+
+[dependencies]
+python = "3.10.*"
+numpy = "1.26.*"
+pandas = "2.3.*"
+matplotlib = "3.10.*"
+pytask = "0.5.*"
+pytask-latex = "==0.4.3"
+
+[tasks.pytask]
+cmd = "pytask"
+env = { PYTHONPATH = "src" }
+
+[tool.pytask.ini_options]
+paths = ["src/sareh_project/tasks"]
+task_files = ["Task_*.py"]
