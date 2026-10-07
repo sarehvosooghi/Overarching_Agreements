@@ -21,43 +21,10 @@ compute_coalition_with_coordination()
     the long-horizon (T = TimeRange) versions of these five objects are
     returned under the same keys suffixed with "_long".
 
-THE BUG THAT WAS FIXED
------------------------
-At every n, the equilibrium continuation structure M*_{n-m1} that forms
-alongside a peeling coalition of size m1 CAN legitimately already contain
-an overarching sub-block from an earlier step of the recursion (e.g. for
-n=10 an overarching {5,5} may already be M*_10; then at n=11, m1=1 peels
-off as a singleton and the remaining 10 countries keep {5,5}, giving
-{5,5,1}). Overarching agreements are checked at every n, not only at the
-top, n=N — the negotiating room can shrink to any size n<N during the
-sequential bargaining process, and an overarching agreement can be
-proposed to whichever n countries are active in the room at that point.
 
-The bug was in how a candidate for n was ASSEMBLED, not in when
-overarching was checked. The previous version built peeling candidates as
-equil[n-r] + equil[r] for various split sizes r — i.e., it combined TWO
-already-computed equilibrium structures. Since each of equil[n-r] and
-equil[r] can itself already contain an overarching sub-block, splicing two
-of them together can produce a structure with TWO independent overarching
-blocks (e.g. {4,4} from one piece and {2,2} from the other, giving the
-invalid {4,4,2,2} at N=12). This violates two things at once: (i) an
-overarching agreement, by Definition 1, must include ALL countries present
-in the negotiation room at the time it forms, so a structure can contain
-AT MOST ONE overarching agreement; and (ii) the peeling coalition m1 must
-be a single, freshly-proposed, independent coalition (a genuine one-shot
-proposal to m1-1 respondents) — it cannot itself be, or be drawn from
-inside, an already-formed overarching agreement.
 
-Fix: build every peeling candidate as a single fresh coalition of size m
-(m = 1,...,n-1) combined with the ALREADY-recursively-computed
-continuation equil[n-m] — never by combining two recursively-computed
-structures. By induction, equil[n-m] contains at most one overarching
-block (the base case n=1 trivially contains none), and appending one fresh
-independent m-block never introduces a second one, so equil[n] always
-satisfies the at-most-one-overarching-agreement requirement, and m1 is
-always an independent coalition rather than a fragment carved out of a
-previously-formed overarching agreement.
-"""
+
+
 
 from __future__ import annotations
 import numpy as np
